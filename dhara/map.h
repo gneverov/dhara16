@@ -25,7 +25,7 @@
 typedef uint32_t dhara_sector_t;
 
 /* This sector value is reserved */
-#define DHARA_SECTOR_NONE	0xffffffff
+#define DHARA_SECTOR_NONE	0xffff
 
 struct dhara_map {
 	struct dhara_journal	journal;

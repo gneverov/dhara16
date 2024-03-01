@@ -50,32 +50,32 @@ static inline void hdr_set_epoch(uint8_t *buf, uint8_t e)
 
 static inline dhara_page_t hdr_get_tail(const uint8_t *buf)
 {
-	return dhara_r32(buf + 4);
+	return dhara_r16(buf + 4);
 }
 
 static inline void hdr_set_tail(uint8_t *buf, dhara_page_t tail)
 {
-	dhara_w32(buf + 4, tail);
+	dhara_w16(buf + 4, tail);
 }
 
 static inline dhara_page_t hdr_get_bb_current(const uint8_t *buf)
 {
-	return dhara_r32(buf + 8);
+	return dhara_r16(buf + 6);
 }
 
 static inline void hdr_set_bb_current(uint8_t *buf, dhara_page_t count)
 {
-	dhara_w32(buf + 8, count);
+	dhara_w16(buf + 6, count);
 }
 
 static inline dhara_page_t hdr_get_bb_last(const uint8_t *buf)
 {
-	return dhara_r32(buf + 12);
+	return dhara_r16(buf + 8);
 }
 
 static inline void hdr_set_bb_last(uint8_t *buf, dhara_page_t count)
 {
-	dhara_w32(buf + 12, count);
+	dhara_w16(buf + 8, count);
 }
 
 /* Clear user metadata */
@@ -178,7 +178,7 @@ static void reset_journal(struct dhara_journal *j)
 	 * conservative guess.
 	 */
 	j->epoch = 0;
-	j->bb_last = j->nand->num_blocks >> 6;
+	j->bb_last = j->nand->num_blocks >> 9;
 	j->bb_current = 0;
 
 	j->flags = 0;

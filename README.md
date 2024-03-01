@@ -1,3 +1,12 @@
+# Dhara16
+Dhara16 is a modified version of [Dhara](https://github.com/dlbeer/dhara) for small NOR flash chips commonly used as XIP memory for microcontrollers. The primary modification is to use a 16-bit radix instead of 32 bits. This reduces the overhead of metadata to facilitate filesystems of the order of a few megabytes.
+
+Given a NOR flash with 256-byte program blocks, 4096-byte erase blocks, and 1 MB total size. It is most efficient to use a Dhara page size of 512 bytes, giving 8 pages per erase block, and an efficiency of 7/8. Combined with a GC ratio of 6, the overall efficiency is 3/4. So of the 1024 kB of flash memory, only 768 kB is usable by a filesystem.
+
+Whether this cost is worthwhile depends on the application. If you have a lot of files or do a lot of writes, then using a flash translation layer might be a benefit. In addition to wear-levelling, using Dhara also reduces the filesystem block size from 4096 bytes to 512 bytes, thus reducing internal fragmentation which offsets the cost of the flash translation layer.
+
+# Dhara
+```
 	   Dhara: NAND flash translation layer for small MCUs
 
 		     Daniel Beer <dlbeer@gmail.com>
@@ -103,3 +112,4 @@ Implementations of two popular ECC mechanisms (Hamming and BCH) can be
 found in the ecc/ subdirectory. Each implements ECC over variable-sized
 chunks (256 or 512 bytes are typical sizes). Multiple ECC chunks may be
 required per page.
+```

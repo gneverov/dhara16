@@ -21,18 +21,18 @@
 #include "nand.h"
 
 /* Number of bytes used by the journal checkpoint header. */
-#define DHARA_HEADER_SIZE		16
+#define DHARA_HEADER_SIZE		10
 
 /* Global metadata available for a higher layer. This metadata is
  * persistent once the journal reaches a checkpoint, and is restored on
  * startup.
  */
-#define DHARA_COOKIE_SIZE		4
+#define DHARA_COOKIE_SIZE		2
 
 /* This is the size of the metadata slice which accompanies each written
  * page. This is independent of the underlying page/OOB size.
  */
-#define DHARA_META_SIZE			132
+#define DHARA_META_SIZE			34
 
 /* When a block fails, or garbage is encountered, we try again on the
  * next block/checkpoint. We can do this up to the given number of
@@ -43,7 +43,7 @@
 /* This is a page number which can be used to represent "no such page".
  * It's guaranteed to never be a valid user page.
  */
-#define DHARA_PAGE_NONE			((dhara_page_t)0xffffffff)
+#define DHARA_PAGE_NONE			((dhara_page_t)0xffff)
 
 /* State flags */
 #define DHARA_JOURNAL_F_DIRTY		0x01

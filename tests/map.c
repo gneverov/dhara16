@@ -74,19 +74,19 @@ static int check_recurse(struct dhara_map *m,
 		dabort("mt_check", err);
 
 	/* Check the first <depth> bits of the ID field */
-	id = dhara_r32(meta);
+	id = dhara_r16(meta);
 	if (!depth) {
 		id_expect = id;
 	} else {
-		assert(!((id ^ id_expect) >> (32 - depth)));
+		assert(!((id ^ id_expect) >> (16 - depth)));
 	}
 
 	/* Check all alt-pointers */
-	for (i = depth; i < 32; i++) {
-		dhara_page_t child = dhara_r32(meta + (i << 2) + 4);
+	for (i = depth; i < 16; i++) {
+		dhara_page_t child = dhara_r16(meta + (i << 1) + 2);
 
 		count += check_recurse(m, page, child,
-			id ^ (1 << (31 - i)), i + 1);
+			id ^ (1 << (15 - i)), i + 1);
 	}
 
 	return count;

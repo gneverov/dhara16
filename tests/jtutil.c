@@ -113,7 +113,7 @@ static int enqueue(struct dhara_journal *j, uint32_t id, dhara_error_t *err)
 	int i;
 
 	seq_gen(id, r, page_size);
-	dhara_w32(meta, id);
+	dhara_w16(meta, id);
 
 	for (i = 0; i < DHARA_MAX_RETRIES; i++) {
 		jt_check(j);
@@ -156,7 +156,7 @@ int jt_enqueue_sequence(struct dhara_journal *j, int start, int count)
 
 		if (dhara_journal_read_meta(j, root, meta, &err) < 0)
 			dabort("read_meta", err);
-		assert(dhara_r32(meta) == start + i);
+		assert(dhara_r16(meta) == start + i);
 	}
 
 	return count;
@@ -181,9 +181,9 @@ void jt_dequeue_sequence(struct dhara_journal *j, int next, int count)
 
 		jt_check(j);
 		dhara_journal_dequeue(j);
-		id = dhara_r32(meta);
+		id = dhara_r16(meta);
 
-		if (id == 0xffffffff) {
+		if (id == 0xffff) {
 			garbage_count++;
 			assert(garbage_count < max_garbage);
 		} else {

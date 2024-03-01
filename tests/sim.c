@@ -20,7 +20,7 @@
 #include "sim.h"
 #include "util.h"
 
-#define LOG2_PAGE_SIZE		9
+#define LOG2_PAGE_SIZE		7
 #define LOG2_PAGES_PER_BLOCK	3
 #define LOG2_BLOCK_SIZE		(LOG2_PAGE_SIZE + LOG2_PAGES_PER_BLOCK)
 #define NUM_BLOCKS		113

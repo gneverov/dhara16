@@ -18,7 +18,7 @@
 #include "bytes.h"
 #include "map.h"
 
-#define DHARA_RADIX_DEPTH	(sizeof(dhara_sector_t) << 3)
+#define DHARA_RADIX_DEPTH	(sizeof(uint16_t) << 3)
 
 static inline dhara_sector_t d_bit(int depth)
 {
@@ -31,12 +31,12 @@ static inline dhara_sector_t d_bit(int depth)
 
 static inline void ck_set_count(uint8_t *cookie, dhara_sector_t count)
 {
-	dhara_w32(cookie, count);
+	dhara_w16(cookie, count);
 }
 
 static inline dhara_sector_t ck_get_count(const uint8_t *cookie)
 {
-	return dhara_r32(cookie);
+	return dhara_r16(cookie);
 }
 
 static inline void meta_clear(uint8_t *meta)
@@ -46,22 +46,22 @@ static inline void meta_clear(uint8_t *meta)
 
 static inline dhara_sector_t meta_get_id(const uint8_t *meta)
 {
-	return dhara_r32(meta);
+	return dhara_r16(meta);
 }
 
 static inline void meta_set_id(uint8_t *meta, dhara_sector_t id)
 {
-	dhara_w32(meta, id);
+	dhara_w16(meta, id);
 }
 
 static inline dhara_page_t meta_get_alt(const uint8_t *meta, int level)
 {
-	return dhara_r32(meta + 4 + (level << 2));
+	return dhara_r16(meta + 2 + (level << 1));
 }
 
 static inline void meta_set_alt(uint8_t *meta, int level, dhara_page_t alt)
 {
-	dhara_w32(meta + 4 + (level << 2), alt);
+	dhara_w16(meta + 2 + (level << 1), alt);
 }
 
 /************************************************************************
